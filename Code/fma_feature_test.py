@@ -9,6 +9,7 @@ import tensorflow as tf
 import numpy as np
 import pickle
 import pandas as pd
+from sklearn.model_selection import train_test_split
 # np.set_printoptions(threshold='nan')
 
 genreDict = {
@@ -36,6 +37,8 @@ def extract_features(basedir,trackDict,extension='.mp3'):
             genre = trackDict.get(trackID)
 
             if (genre == 'Hip-Hop' or genre == 'Rock' or genre == 'Pop' or genre == 'Folk'):
+                        counter += 1
+                        print counter,' ',trackID
                         # Extract the mel-spectrogram
                         y, sr = librosa.load(f)
                         # Let's make and display a mel-scaled power (energy-squared) spectrogram
@@ -44,19 +47,18 @@ def extract_features(basedir,trackDict,extension='.mp3'):
                         log_mel_spec = librosa.logamplitude(mel_spec, ref_power=np.max)
                         #make dimensions of the array even 128x644
                         log_mel_spec = np.resize(log_mel_spec,(128,644))
-                        print log_mel_spec.shape
+                        # print log_mel_spec.shape
                         #store into feature array
                         features.append(log_mel_spec.flatten())
 
                         label = genreDict.get(genre)
                         labels.append(label)
-                counter += 1
+
             else:
                 pass
 
     features = np.asarray(features).reshape(len(features),82432)
     print features.shape
-    print one_hot_encode(labels)
     return (features, one_hot_encode(labels))
 
 
@@ -100,10 +102,15 @@ if __name__ == "__main__":
 
     train_data, train_labels = extract_features('../../fma_small',track_data)
 
-
+    batch1, batch2 = train_test_split(train_data,test_size=0.5)
+    batch1Labels, batch2Labels = train_test_split(train_labels,test_size=0.5)
     # store preprocessed data in serialised format so we can save computation time and power
-    with open('../../4genre.data', 'w') as f:
-        pickle.dump(train_data, f)
+    with open('../../4genreBatch1.data', 'w') as f:
+        pickle.dump(batch1, f)
+    with open('../../4genreBatch2.data', 'w') as f:
+        pickle.dump(batch2, f)
 
-    with open('../../4genre.labels', 'w') as f:
-        pickle.dump(train_labels, f)
+    with open('../../4genreBatch1.labels', 'w') as f:
+        pickle.dump(batch1Labels, f)
+    with open('../../4genreBatch2.labels', 'w') as f:
+        pickle.dump(batch2Labels, f)

@@ -15,6 +15,7 @@ def conv_layer(input_data, num_input_channels, num_filters, filter_shape, pool_s
 
     # setup the convolutional layer operation
     out_layer = tf.nn.conv2d(input_data, weights, [1, 1, 1, 1], padding='SAME')
+
     # add the bias
     out_layer += bias
 
@@ -23,7 +24,7 @@ def conv_layer(input_data, num_input_channels, num_filters, filter_shape, pool_s
 
     # now perform max pooling
     ksize = [1, pool_shape[0], pool_shape[1], 1]
-    strides = [1, pool_shape[0], pool_shape[1], 1]
+    strides = [1, 2, 2, 1]
     out_layer = tf.nn.max_pool(out_layer, ksize=ksize, strides=strides,padding='SAME')
 
     return out_layer
@@ -79,8 +80,8 @@ with open('../../4GenreTest.labels', 'r') as f:
 
 # Python optimisation variables
 learning_rate = 0.001
-num_of_epochs = 107
-batch_size = 30
+num_of_epochs = 5
+batch_size = 642
 dropout = 0.75
 
 # declare the training data placeholders
@@ -92,23 +93,23 @@ keep_prob = tf.placeholder(tf.float32)  # dropout (keep probability)
 
 #output from first layer will halve the dimensions of the input to 322 x 64 due to max pooling having a stride of 2
 # create some convolutional layers
-hidden_layer1 = conv_layer(x_reshaped, 1, 256, [4, 4], [4, 4], name='layer1')
-hidden_layer2 = conv_layer(hidden_layer1, 256, 128, [4, 4], [2, 2], name='layer2')
-hidden_layer3 = conv_layer(hidden_layer2, 128, 64, [4, 4], [2, 2], name='layer3')
+hidden_layer1 = conv_layer(x_reshaped, 1, 32, [4, 1], [2, 2], name='layer1')
+hidden_layer2 = conv_layer(hidden_layer1, 32, 64, [4, 1], [2, 2], name='layer2')
 
 
-flattened = tf.reshape(hidden_layer3, [-1,  41 * 8 * 64])
+
+flattened = tf.reshape(hidden_layer2, [-1,  161 * 32 * 64])
 
 # setup some weights and bias values for the fully connected layer, then activate with ReLU
-wd1 = tf.Variable(tf.truncated_normal([41 * 8 * 64, 1024], stddev=0.03), name='wd1')
-bd1 = tf.Variable(tf.truncated_normal([1024], stddev=0.01), name='bd1')
+wd1 = tf.Variable(tf.truncated_normal([161 * 32 * 64, 1000], stddev=0.03), name='wd1')
+bd1 = tf.Variable(tf.truncated_normal([1000], stddev=0.01), name='bd1')
 dense_layer1 = tf.matmul(flattened, wd1) + bd1
 #Relu activation
 dense_layer1 = tf.nn.relu(dense_layer1)
 #Apply dropout here
 dense_layer1 = tf.nn.dropout(dense_layer1, keep_prob)
 # Softmax Classifier layer
-wd2 = tf.Variable(tf.truncated_normal([1024, 4], stddev=0.03), name='wd2')
+wd2 = tf.Variable(tf.truncated_normal([1000, 4], stddev=0.03), name='wd2')
 bd2 = tf.Variable(tf.truncated_normal([4], stddev=0.01), name='bd2')
 logits = tf.matmul(dense_layer1, wd2) + bd2
 y_ = tf.nn.softmax(logits)
@@ -142,6 +143,6 @@ with tf.Session() as sess:
 
     print "Training complete!"
 
-    final_acc, softmaxOutput = sess.run([accuracy,logits], feed_dict={x: testData, y: testLabels,keep_prob: 1.0})
+    final_acc, softmaxOutput = sess.run([accuracy,y_], feed_dict={x: testData, y: testLabels,keep_prob: 1.0})
     print "final accuracy: " , final_acc
     print softmaxOutput
