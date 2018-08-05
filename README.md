@@ -10,17 +10,23 @@ they break down when no historical
 data is available and as a result they cannot recommend new and unpopular songs.
 
 
-In this paper, the author proposes a new recommendation model that uses music
+In this project, the author proposes a new recommendation model that uses music
 audio and deep learning to produce playlists based on a given query song. 
 
-## Datasets
-
-## Results
-The system was evaluated qualitatively using a human evaluation study on the free music
-archive dataset. The results show that the model produces recommendations of a
-sensible nature. To conclude, the project shows that use of deep learning in a music
-recommendation setting has the potential to outperform traditional content-agnostic approaches.
+details explained here:
 ## Code
 
-## References
+to use this system:
+
+- download a dataset (FMA,GTZAN)
+- feature convert data to mel-spectrograms using featureConverter script
+- change file path in model script to feed data and train CNN
+- keep an ordered list of songTitles in text file for library of songs
+- run CNN in predict script
+- run playlist generator
+
+- output playlist :)
+
+have fun!
+
 
