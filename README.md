@@ -1,5 +1,5 @@
 # Content-based-Music-Recommendation System using Deep Learning
-3rd year university project seeking to bridge the semantic gap between music audio and user preferences
+Project seeking to bridge the semantic gap between music audio and user preferences
 
 ## Abstract
 The automated curation of music playlists has become a signifcant problem in the last decade, with the colossal rise of streaming platforms e.g. Spotify.
