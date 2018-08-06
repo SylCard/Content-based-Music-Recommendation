@@ -1,0 +1,292 @@
+<!DOCTYPE HTML>
+<!--
+	Identity by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Silver Recommendation</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- bootstrap stuff -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- template stuff -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
+		<style media="screen">
+		</style>
+	</head>
+	<body class="is-loading">
+		<!-- Wrapper -->
+			<div id="wrapper">
+        <div class="row">
+          <div class="col-sm-1">
+
+          </div>
+          <div class="col-sm-5">
+            <h1> 1. Choose a song</h1>
+            <div class="field">
+              <div class="select-wrapper">
+                <select name="querySong" id="currentSong">
+									{% for value in QuerySongs %}
+										<option value="{{value}}">{{value}}</option>
+		 							{% endfor %}
+                </select>
+              </div>
+            </div>
+						<audio id="currentSongPlayer" controls>
+  						<source  id="currentMP3" src="../static/music/ChanceTheRapper-CocoaButterKisses.mp3" type="audio/mpeg">
+						</audio>
+
+            <h1>2. Check it out </h1>
+						<p>Genre: Hip-Hop</p>
+            <p><a href="https://plot.ly/~SylCard/4">Stats</a></p>
+				     <!-- Plotly chart will be drawn inside this div -->
+				     <div id="plotly-div" style="width:400px;"></div>
+				       <script>
+							 trace1 = {
+										  x: [0.0075041372329, 0.0591632761061, 0.0133918002248, 0.0125257400796, 0.0125284641981, 0.100540973246, 0.0353362709284, 0.110823862255, 0.0452381335199, 0.0356952399015, 0.0499625653028],
+										  y: [0.624699831009, 0.726919233799, 0.679298341274, 0.702713489532, 0.67142945528, 0.603674590588, 0.734681606293, 0.652757465839, 0.696265161037, 0.79933577776, 0.743150472641],
+										  z: [0.367796063423, 0.213917464018, 0.307309925556, 0.284760773182, 0.316042095423, 0.295784443617, 0.229982152581, 0.236418664455, 0.25849673152, 0.164968952537, 0.206887066364],
+										  marker: {
+										    color: [0.367796063423, 0.213917464018, 0.307309925556, 0.284760773182, 0.316042095423, 0.295784443617, 0.229982152581, 0.236418664455, 0.25849673152, 0.164968952537, 0.206887066364],
+										    colorscale: 'Viridis',
+										    colorsrc: 'SylCard:5:cd7b35',
+										    opacity: 0.8,
+										    size: 12
+										  },
+										  mode: 'markers',
+										  text: ['Dee_Yan-Key  16  santa_on_tour', 'The High Life (ft Elijah Blake) (Prod by Kevin Randolph) (DatPiff Exclusive)', 'Favorite Song (ft Childish Gambino) (Prod by Nate Fox) (DatPiff Exclusive)', 'Pusha Man (ft Nate Fox & Lili K) (Prod by Ceej for Two9) (DatPiff Exclusive)', 'Days Before Rodeo   The Prayer', 'Mors_Ontologica  09  Voice_Of_Degeneration', 'Lost (ft Noname Gypsy) (Prod by Nate Fox) (DatPiff Exclusive)', 'Silk Pillow (ft Beck) prod Beck and Childish Gambino', 'Cocoa Butter Kisses (ft Vic Mensa & Twista) (Prod by Cam for JUSTICE League & Peter Cottont (DatPiff Exclusive)', 'Smoke Again (ft Ab-Soul) (Prod by Blended Babies) (DatPiff Exclusive)', 'e4c  02  332_variation_untitled_remix'],
+										  textsrc: 'SylCard:5:fd53b6',
+										  type: 'scatter3d',
+										  xsrc: 'SylCard:5:9de753',
+										  ysrc: 'SylCard:5:4ede3c',
+										  zsrc: 'SylCard:5:8f239d'
+										};
+										data = [trace1];
+										layout = {
+										  margin: {
+										    r: 0,
+										    t: 0,
+										    b: 0,
+										    l: 0
+										  },
+										  scene: {
+										    xaxis: {
+										      backgroundcolor: 'rgb(200, 200, 230)',
+										      gridcolor: 'rgb(255, 255, 255)',
+										      showbackground: true,
+										      title: 'Rock',
+										      zerolinecolor: 'rgb(255, 255, 255)'
+										    },
+										    yaxis: {
+										      backgroundcolor: 'rgb(230, 200,230)',
+										      gridcolor: 'rgb(255, 255, 255)',
+										      showbackground: true,
+										      title: 'Hip-Hop',
+										      zerolinecolor: 'rgb(255, 255, 255)'
+										    },
+										    zaxis: {
+										      backgroundcolor: 'rgb(230, 230,200)',
+										      gridcolor: 'rgb(255, 255, 255)',
+										      showbackground: true,
+										      title: 'Classical',
+										      zerolinecolor: 'rgb(255, 255, 255)'
+										    }
+										  },
+										  title: 'Playlist'
+										};
+										Plotly.plot('plotly-div', {
+										  data: data,
+										  layout: layout
+										});
+				       </script>
+
+
+          </div>
+          <div class="col-sm-5">
+            <h1>3. Enjoy the generated playlist!</h1>
+						<div id="playlist">
+							 <div class="playlist1">
+									 <p > Chance The Rapper - Pusha Man
+									 <audio  controls>
+										 <source  src="../static/music/PushaMan.mp3" type="audio/mpeg">
+									 </audio>
+									 </p>
+									 <p> Chance The Rapper - Lost (ft NoName Gypsy)
+									 <audio controls>
+										 <source  src="../static/music/Lost.mp3" type="audio/mpeg">
+									 </audio>
+									 </p>
+									 <p> Logic ft. Elijah Blake - The High Life
+									 <audio  controls>
+										 <source src="../static/music/highLife.mp3" type="audio/mpeg">
+									 </audio>
+									 </p>
+									 <p> Chance The Rapper - Favourite Song
+
+									 <audio  controls>
+										 <source  src="../static/music/faveSong.mp3" type="audio/mpeg">
+									 </audio>
+
+									 </p>
+									 <p> Travis Scott - The Prayer
+
+									 <audio controls>
+										 <source  src="../static/music/thePrayer.mp3" type="audio/mpeg">
+									 </audio>
+
+									 </p>
+									 <p> Childish Gambino - Silk Pillow (ft Beck)
+
+									 <audio  controls>
+										 <source src="../static/music/silkPillow.mp3" type="audio/mpeg">
+									 </audio>
+
+									 </p>
+									 <p> Joey Badass - Snakes ft. Tnah Apex
+
+									 <audio controls>
+										 <source   src="../static/music/snakes.mp3" type="audio/mpeg">
+									 </audio>
+
+									 </p>
+									 <p> Dee Yan-Key - Santa On Tour
+
+									 <audio  controls>
+										 <source   src="../static/music/santaOnTour.mp3" type="audio/mpeg">
+									 </audio>
+
+									 </p>
+									 <p> Chance The Rapper - Smoke Again (ft Ab-Soul)
+
+									 <audio controls>
+										 <source  src="../static/music/smokeAgain.mp3" type="audio/mpeg">
+									 </audio>
+
+									 </p>
+							</div>
+					  </div>
+          </div>
+          <div class="col-sm-1">
+
+          </div>
+        </div>
+				<!-- Footer -->
+					<footer id="footer">
+						<ul class="copyright">
+							Made by Sylvester Cardorelle
+					</footer>
+
+			</div>
+
+			<script>
+				var src = '';
+				$(document).on('change','#currentSong',  function(e){
+							e.preventDefault();
+							if ($(this).find("option:selected").attr('value') == "Chance The Rapper - Cocoa Butter Kisses") {
+								 // change_track('../static/music/ChanceTheRapper-CocoaButterKisses.mp3');
+								 // now load correct Playlist
+
+								  var playlist1 =   '<p> Chance The Rapper - Pusha Man\
+								 		 										  <audio  controls>\
+								 		 											  <source  id="currentMP3" src="../static/music/PushaMan.mp3" type="audio/mpeg">\
+								 		 										  </audio>\
+								 		 										  </p>\
+								 		 										  <p> Chance The Rapper - Lost (ft NoName Gypsy)\
+								 		 										  <audio controls>\
+								 		 											  <source  id="currentMP3" src="../static/music/Lost.mp3" type="audio/mpeg">\
+								 		 										  </audio>\
+								 		 										  </p>\
+								 		 										  <p> Logic ft. Elijah Blake - The High Life\
+								 		 										  <audio  controls>\
+								 		 											  <source  id="currentMP3" src="../static/music/highLife.mp3" type="audio/mpeg">\
+								 		 										  </audio>\
+								 		 										  </p>\
+								 		 										  <p> Chance The Rapper - Favourite Song\
+								 		 										  <audio  controls>\
+								 		 											  <source  id="currentMP3" src="../static/music/faveSong.mp3" type="audio/mpeg">\
+								 		 										  </audio>\
+								 		 										  </p>\
+																				  <p> Travis Scott - The Prayer\
+																				  <audio controls> <source  src="../static/music/thePrayer.mp3" type="audio/mpeg">\
+																				  </audio>\
+																				</p>\
+																				<p> Childish Gambino - Silk Pillow (ft Beck)\
+																				<audio  controls>\
+																					<source src="../static/music/silkPillow.mp3" type="audio/mpeg">\
+																				</audio>\
+																				</p>\
+																				<p> Joey Badass - Snakes ft. Tnah Apex \
+																				<audio controls\
+																					<source   src="../static/music/snakess.mp3" type="audio/mpeg">\
+																				</audio>\
+																				</p>\
+																				<p> Dee Yan-Key - Santa On Tour\
+																				<audio  controls>\
+																					<source   src="../static/music/santaOnTour.mp3" type="audio/mpeg">\
+																				</audio>\
+																				</p>\
+																				<p> Chance The Rapper - Smoke Again (ft Ab-Soul)\
+																				<audio controls>\
+																					<source  src="../static/music/smokeAgain.mp3" type="audio/mpeg">\
+																				</audio>\
+																				</p>';
+								 $("#playlist").html(playlist1);
+
+
+
+
+							}
+							else if ($(this).find("option:selected").attr('value') == "Incubus - Nowhere Fast") {
+								// alert('changed inccbus');
+								// change_track('../static/music/Incubus-NowhereFast.mp3');
+								// src = '../static/music/Incubus-NowhereFast.mp3';
+								var playlist2 = [
+									 		 										'<p > Chance The Rapper - Pusha Man ',
+									 		 										'<audio  controls>',
+									 		 											'<source  id="currentMP3" src="../static/music/PushaMan.mp3" type="audio/mpeg">',
+									 		 										'</audio>',
+									 		 										'</p>'
+
+									].join("\n") ;
+								 $("#playlist").html(playlist2);
+							}
+							else if ($(this).find("option:selected").attr('value') == "Peter Rudenko - Counterclockwise"){
+									// alert('changed classical');
+									// change_track('../static/music/SergeyCheremisinov-Sirius.mp3');
+								// src = '../static/music/SergeyCheremisinov-Sirius.mp3';
+								var playlist3 = [
+																				'<p > Chance The Rapper - Pusha Man ',
+																					'<audio  controls>',
+																						'<source  id="currentMP3" src="../static/music/PushaMan.mp3" type="audio/mpeg">',
+																					'</audio>',
+																					'</p>'
+
+									].join("\n") ;
+								 $("#playlist").html(playlist3);
+							}
+
+					});
+
+					function change_track(sourceUrl) {
+						    var song = $("#currentSongPlayer");
+						    $("#currentMP3").attr("src", sourceUrl);
+						    /****************/
+						    // audio.pause();
+						    song.load();//suspends and restores all audio element
+
+						    song.play(); //changed based on Sprachprofi's comment below
+						    // audio[0].oncanplaythrough = audio[0].play();
+						    /****************/
+						};
+
+
+			</script>
+
+	</body>
+</html>
