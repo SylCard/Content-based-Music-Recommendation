@@ -13,7 +13,7 @@ data is available and as a result they cannot recommend new and unpopular songs.
 In this project, the author proposes a new recommendation model that uses music
 audio and deep learning to produce playlists based on a given query song. 
 
-details explained here:
+details explained here: https://medium.com/@silvercloud438/how-i-taught-a-neural-network-to-understand-similarities-in-music-audio-d4fca54c1aed
 ## Code
 
 to use this system:
